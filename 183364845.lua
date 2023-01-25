@@ -18,7 +18,7 @@ local win = lib:Window(_G.Game_Name or "Baseplate", Color3.fromRGB(Color3.fromRG
 local Player = game:GetService"Players".LocalPlayer
 local Character = Player.Character
 
-local main = lib:Tab("Main")
+local main = win:Tab("Main")
 
 main:Button("Complete Obby", function()
     for i = 1, 30 do
