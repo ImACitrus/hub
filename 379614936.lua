@@ -6,9 +6,8 @@
 
 ]]
 
--- Global configurments --
-_G.Tween = _G.Farm or false
-_G.Duration = _G.Speed or 0.5
+-- Configurment --
+_G.Farm = true
 
 -- external functions --
 function click( mouse )
@@ -43,11 +42,15 @@ local Target = UI:WaitForChild("Target"):WaitForChild("TargetText")
 -- Functions --
 task.spawn(function()
     while _G.Farm and task.wait() do
-        local tween = TweenService:Create(Hrp, TweenInfo.new(0.5), {
-            CFrame = workspace:FindFirstChild(Target.Text).HumanoidRootPart.CFrame
-        })
-        tween:Play()
-        tween.Completed:Wait()
-        click(Mouse)
+        if not workspace:FindFirstChild(Target.Text) then
+            continue
+        else
+            local tween = TweenService:Create(Hrp, TweenInfo.new(0.5), {
+                CFrame = workspace:FindFirstChild(Target.Text).HumanoidRootPart.CFrame
+            })
+            tween:Play()
+            tween.Completed:Wait()
+            click(Mouse)
+        end
     end
 end)
