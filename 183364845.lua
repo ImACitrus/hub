@@ -33,6 +33,6 @@ main:Button("Complete Obby", function()
     end
 end)
 
-main:Button("Server Hop", function()
+main:Button("Server Hopp", function()
     game:GetService"TeleportService":Teleport(game.PlaceId)
 end)
