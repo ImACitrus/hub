@@ -6,8 +6,9 @@
 
 ]]
 
--- Configurment --
-_G.Farm = true
+-- Global configurments --
+_G.Tween = _G.Farm or false
+_G.Duration = _G.Speed or 0.5
 
 -- external functions --
 function click( mouse )
