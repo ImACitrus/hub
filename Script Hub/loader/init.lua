@@ -1,5 +1,5 @@
 -- Content --
-local results = game:GetService"HttpService":JSONDecode( game:HttpGet("https://raw.githubusercontent.com/ImACitrus/hub/main/games.json") )
+local results = game:GetService"HttpService":JSONDecode( game:HttpGet("https://raw.githubusercontent.com/ImACitrus/hub/main/Script%20Hub/configurments/games.json") )
 
 -- Information --
 _G.INFORMATION = {
@@ -19,7 +19,7 @@ end
 
 -- Init --
 if _G.INFORMATION.IsSupported then
-    loadstring(game:HttpGet(("https://raw.githubusercontent.com/ImACitrus/hub/main/%s.lua"):format(tostring(_G.INFORMATION.Id))))()
+    loadstring(game:HttpGet(("https://raw.githubusercontent.com/ImACitrus/hub/main/Script%20Hub/games/%s.lua"):format(tostring(_G.INFORMATION.Id))))()
 end
 
 --[[
