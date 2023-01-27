@@ -1,81 +1,49 @@
---[[
-    [Codespace]
-    -> Auto day
-    -> fov
-    -> teleport key (gameplay only)
-]]
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/ImACitrus/vapeLib/main/.lua"))()
+local win = lib:Window("ER:LC", Color3.fromRGB(0,191,255), Enum.KeyCode.LeftAlt)
 
--- Settings --
-_G.SETTINGS = {
-    lighting = {day=false},
-    camera = {fov=90},
-    teleport_key = Enum.KeyCode.LeftControl
-}
+_G.FV = false
+_G.WalkSpeed = 16
+_G.JumpPower = 50
 
--- Services --
+_G.ClockTime = 14
+_G.ForceClockTime = false
+
 local Players = game:GetService"Players"
-
--- User Config --
 local Player = Players.LocalPlayer
-local PlayerScripts = Player.PlayerScripts
 
--- User 3D --
 local Character = Player.Character
 local Humanoid = Character.Humanoid
 
--- User Utility --
-local Mouse = Player:GetMouse()
-local camera = workspace.CurrentCamera
+local Client = win:Tab("Client")
+local World = win:Tab("World")
 
--- Folders --
-local Vehicles = workspace.Vehicles
-
--- functions --
-local vehicle = function()
-   for _, object in next, Vehicles:GetDescendants() do
-      if object.Name == "Owner" and object:IsA("StringValue") and object.Value == Player.Name then
-         return object.Parent.Parent
-      end
-   end
-end
-
-local vehicles = function()
-   local vehicles = {}
-   for _, object in next, Vehicles:GetDescendants() do
-      if object.Name == "Owner" and object:IsA("StringValue") and object.Value ~= Player.Name then
-         vehicles[#vehicles + 1] = object.Parent.Parent
-      end
-   end
-   return vehicles
-end
-
--- conditions --
-if game:GetService("Workspace"):FindFirstChild("SnowPart") then
-    game:GetService("Workspace"):FindFirstChild("SnowPart"):Remove()
-end
-
--- UserInputs --
-game:GetService"UserInputService".WindowFocused:Connect(function()
-    game:GetService"UserInputService".InputBegan:Connect(function(input)
-        if input.KeyCode == _G.SETTINGS.teleport_key then
-            if Humanoid.Sit then
-                if vehicle().DriverSeat.Occupant ~= nil then
-                    vehicle():PivotTo( Mouse.Hit * CFrame.new(0, 5, 0) )
-                end
-            else
-                Character:PivotTo( Mouse.Hit * CFrame.new(0, 5, 0) )
-            end
-        end
-    end)
+Client:Slider("WalkSpeed", 16, 23, 16, function(value)
+    _G.WalkSpeed = value
+    Humanoid.WalkSpeed = value
 end)
 
--- Auto day --
-task.spawn(function()
-    while _G.SETTINGS.lighting.day and task.wait() do
-       game.Lighting.ClockTime = 10
-       game.Lighting.Brightness = 0
+Client:Slider("JumpPower", 50, 500, 50, function(value)
+    _G.JumpPower = value
+    Humanoid.JumpPower = value
+end)
+
+Client:Toggle("Force Values", false, function(value)
+    _G.FV = value
+    while _G.FV and task.wait() do
+        if not _G.FV then
+            Humanoid.WalkSpeed = 16
+            Humanoid.JumpPower = 50
+        end
+        Humanoid.WalkSpeed = _G.WalkSpeed
+        Humanoid.JumpPower = _G.JumpPower
     end
 end)
 
--- Field of view --
-camera.FieldOfView = _G.SETTINGS.camera.fov
+World:Toggle("Always day", false, function(value)
+    _G.ForceClockTime = value
+    while _G.ForceClockTime and task.wait() do
+        game.Lighting.Clocktime = _G.ClockTime
+    end
+end)
+
+lib.PARENT_OBJECT()
