@@ -19,7 +19,7 @@ end
 
 -- Init --
 if _G.INFORMATION.IsSupported then
-    loadstring(game:HttpGet(("https://raw.githubusercontent.com/ImACitrus/hub/main/Script%20Hub/games/%s.lua"):format(tostring(_G.INFORMATION.Id))))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ImACitrus/hub/main/Script%20Hub/games/"..tostring(_G.INFORMATION.Id)..".lua"))()
 end
 
 --[[
